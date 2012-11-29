@@ -7,6 +7,11 @@ from socializer.settings import SOCIALIZER_AUTO_TAKEDOWN_TRIGGER
 from socializer.signals import socializer_auto_takedown
 
 
+class CommentManager(models.Manager):
+    def public(self):
+        return super(Comment, self).get_query_set().filter(visible=True)
+
+
 class Comment(models.Model):
     """
     A Comment is a simple message that a user can leave on an object.
@@ -20,6 +25,8 @@ class Comment(models.Model):
 
     text = models.CharField(max_length=500)
     visible = models.BooleanField(default=True)
+
+    objects = CommentManager()
 
     def __unicode__(self):
         return u'%s commented on: %s' % (self.user.get_full_name(), self.content_object.__unicode__())
