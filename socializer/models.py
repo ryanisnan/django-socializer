@@ -9,7 +9,7 @@ from socializer.signals import socializer_auto_takedown
 
 class CommentManager(models.Manager):
     def public(self):
-        return super(Comment, self).get_query_set().filter(visible=True)
+        return super(CommentManager, self).get_query_set().filter(visible=True)
 
 
 class Comment(models.Model):
