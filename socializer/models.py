@@ -75,6 +75,8 @@ class Flag(models.Model):
         unique_together = ('user', 'content_type', 'object_id')
 
     def save(self, *args, **kwargs):
+        super(Flag, self).save(*args, **kwargs)
+
         if SOCIALIZER_AUTO_TAKEDOWN:
             if Flag.objects.filter(content_type=self.content_type, object_id=self.object_id).count() >= SOCIALIZER_AUTO_TAKEDOWN_TRIGGER:
                 try:
