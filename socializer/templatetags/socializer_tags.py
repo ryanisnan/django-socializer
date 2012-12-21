@@ -1,4 +1,5 @@
 from django import template
+from django.contrib.contenttypes.models import ContentType
 from socializer.models import Recommendation
 
 register = template.Library()
@@ -35,10 +36,12 @@ class SocializerRecommendationNode(template.Node):
         except template.VariableDoesNotExist:
             return ''
 
+        actual_obj_type = ContentType.objects.get_for_model(actual_obj)
+
         context = template.Context({
             'user': actual_user,
             'recommendation_count': actual_obj.recommendations.count(),
-            'user_has_recommended_obj': Recommendation.objects.filter(user=actual_user, content_object=actual_obj).exists()
+            'user_has_recommended_obj': Recommendation.objects.filter(user=actual_user, content_type__pk=actual_obj_type.id, object_id=actual_obj.id).exists()
         })
 
         try:
