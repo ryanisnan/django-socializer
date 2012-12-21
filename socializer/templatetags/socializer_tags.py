@@ -44,7 +44,5 @@ class SocializerRecommendationNode(template.Node):
             'user_has_recommended_obj': Recommendation.objects.filter(user=actual_user, content_type__pk=actual_obj_type.id, object_id=actual_obj.id).exists()
         })
 
-        try:
-            return template.loader.get_template(self.template_file).render(context)
-        except:
-            return ''
+        return template.loader.get_template(self.template_file).render(context)
+        
