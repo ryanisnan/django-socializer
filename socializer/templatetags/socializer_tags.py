@@ -13,7 +13,7 @@ def do_socializer_recommendation(parser, token):
         if not (template_file[0] == template_file[-1] and template_file[0] in ('"', "'")):
             raise template.TemplateSyntaxError('%r tag\'s template_file argument should be in quotes' % tag_name)
 
-        return SocializerRecommendationNode(user, obj, template_file)
+        return SocializerRecommendationNode(user, obj, template_file[1:-1])
     except ValueError:
         try:
             tag_name, user, obj = token.split_contents()
@@ -44,5 +44,7 @@ class SocializerRecommendationNode(template.Node):
             'user_has_recommended_obj': Recommendation.objects.filter(user=actual_user, content_type__pk=actual_obj_type.id, object_id=actual_obj.id).exists()
         })
 
-        return template.loader.get_template(self.template_file).render(context)
-        
+        try:
+            return template.loader.get_template(self.template_file).render(context)
+        except:
+            return ''
