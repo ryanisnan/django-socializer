@@ -4,6 +4,7 @@ from socializer.models import Recommendation
 register = template.Library()
 
 
+@register.tag(name='socializer_recommendation')
 def do_socializer_recommendation(parser, token):
     try:
         tag_name, user, obj, template_file = token.split_contents()
