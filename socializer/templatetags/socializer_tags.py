@@ -40,6 +40,7 @@ class SocializerRecommendationNode(template.Node):
 
         context = template.Context({
             'user': actual_user,
+            'obj': actual_obj,
             'recommendation_count': actual_obj.recommendations.count(),
             'user_has_recommended_obj': Recommendation.objects.filter(user=actual_user, content_type__pk=actual_obj_type.id, object_id=actual_obj.id).exists()
         })
