@@ -38,7 +38,7 @@ class SocializerRecommendationNode(template.Node):
         context = template.Context({
             'user': actual_user,
             'recommendation_count': actual_obj.recommendations.count(),
-            'user_has_recommended_obj': Recommendation.objects.exists(user=actual_user, content_object=actual_obj)
+            'user_has_recommended_obj': Recommendation.objects.filter(user=actual_user, content_object=actual_obj).exists()
         })
 
         try:
