@@ -42,7 +42,7 @@ class SocializerRecommendationNode(template.Node):
             'user': actual_user,
             'obj': actual_obj,
             'recommendation_count': actual_obj.recommendations.count(),
-            'user_has_recommended_obj': Recommendation.objects.filter(user=actual_user, content_type__pk=actual_obj_type.id, object_id=actual_obj.id).exists()
+            'user_has_recommended_obj': Recommendation.objects.filter(user=actual_user, content_type__pk=actual_obj_type.id, object_id=actual_obj.id).exists() if actual_user.is_authenticated() else None
         })
 
         return template.loader.get_template(self.template_file).render(context)
