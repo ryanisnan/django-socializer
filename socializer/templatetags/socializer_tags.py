@@ -41,7 +41,12 @@ class SocializerRecommendationNode(template.Node):
         context = template.Context({
             'user': actual_user,
             'recommendation_count': actual_obj.recommendations.count(),
-            'user_has_recommended_obj': Recommendation.objects.filter(user=actual_user, content_type__pk=actual_obj_type.id, object_id=actual_obj.id).exists()
+            'user_has_recommended_obj': Recommendation.objects.filter(user=actual_user, content_type__pk=actual_obj_type.id, object_id=actual_obj.id).exists(),
+            'resource_data': {
+                'app_label': actual_obj_type,
+                'model': actual_obj_type,
+                'object_id': actual_obj.id
+            }
         })
 
         try:
