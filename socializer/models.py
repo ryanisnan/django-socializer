@@ -16,7 +16,7 @@ class Comment(models.Model):
     """
     A Comment is a simple message that a user can leave on an object.
     """
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='socializer_comments')
     timestamp = models.DateTimeField(auto_now_add=True, editable=False)
 
     content_type = models.ForeignKey(ContentType)
@@ -40,7 +40,7 @@ class Recommendation(models.Model):
     A Recommendation is a simple notion that a user can leave on a given object
     to indicate how well they liked a particular piece of content.
     """
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='socializer_recommendations')
     timestamp = models.DateTimeField(auto_now_add=True, editable=False)
 
     content_type = models.ForeignKey(ContentType)
@@ -59,7 +59,7 @@ class Flag(models.Model):
     A Flag is a simple notion that a user can make to mark a piece of content
     as being inappropriate.
     """
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='socializer_flags')
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
@@ -93,7 +93,7 @@ class Nudge(models.Model):
     A Nudge represents a simple notion that a user can make on a piece of
     given content, to indicate they want the owner to do something to that content.
     """
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='socializer_nudges')
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
